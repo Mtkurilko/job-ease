@@ -15,8 +15,13 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "cp src/content.js build/content.js && cp src/background.js build/background.js",
+    "icons": "node scripts/generate-icons.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.3"
   },
   "eslintConfig": {
     "extends": [

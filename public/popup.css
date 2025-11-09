@@ -1,0 +1,29 @@
+html, body { margin:0; padding:0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.je-popup { width:360px; min-width:320px; max-width:100vw; min-height:300px; box-sizing:border-box; background:#fff; padding:12px; }
+.je-popup-header { display:flex; gap:10px; align-items:center; background:linear-gradient(180deg,#eef4ff,#ffffff); border:1px solid #e6ecff; border-radius:10px; padding:8px 10px; margin-bottom:10px; }
+.je-popup-avatar { width:48px; height:48px; object-fit:cover; border-radius:12px; }
+.je-h3 { margin:0 0 4px 0; font-size:16px; }
+.je-popup-tagline { font-size:12px; color:#4b5563; }
+.je-actions { display:flex; gap:8px; margin-bottom:8px; }
+.je-actions button { flex:1; padding:8px 10px; border-radius:6px; border:none; cursor:pointer; }
+.je-actions button:first-child { background:linear-gradient(180deg,#1f6feb,#125cd8); color:#fff; }
+.je-actions button:last-child { background:#eef2ff; color:#1e3a8a; }
+.je-status { font-size:12px; margin-bottom:8px; color:#333; }
+.je-preview { max-height:200px; overflow:auto; padding:8px; background:#fafafa; border-radius:6px; font-size:12px; border:1px solid #e8e8e8; }
+.je-footer { margin-top:10px; font-size:11px; color:#6b7280; text-align:center; }
+button:hover { opacity:.95; }
+
+/* Dark theme overrides (applied when body.je-dark) */
+body.je-dark .je-popup { background:#111827; color:#e5e7eb; }
+body.je-dark .je-popup-header { background:linear-gradient(180deg,#1f2937,#111827); border-color:#1f2937; }
+body.je-dark .je-popup-tagline { color:#9ca3af; }
+body.je-dark .je-status { color:#e5e7eb; }
+body.je-dark .je-preview { background:#1f2937; border-color:#374151; color:#e5e7eb; }
+body.je-dark .je-footer { color:#6b7280; }
+body.je-dark .je-actions button { background:#374151; color:#e5e7eb; }
+body.je-dark .je-actions button:first-child { background:linear-gradient(180deg,#2563eb,#1d4ed8); }
+body.je-dark .je-actions button:last-child { background:#1e3a8a; color:#fff; }
+body.je-dark .je-theme-toggle { color:#e5e7eb; }
+
+.je-theme-row { margin-bottom:8px; font-size:11px; }
+.je-theme-toggle { font-size:12px; display:flex; align-items:center; gap:6px; cursor:pointer; }

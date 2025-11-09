@@ -1,38 +1,57 @@
-.App {
+#job-ease-background {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+}
+
+#job-ease-title {
+  color: #333;
+  font-size: 1.5em;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* App-wide form styling */
+.je-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20,20,40,0.06);
+  padding: 20px;
 }
+.je-hero { display:flex; align-items:center; gap:14px; margin-bottom: 10px; background: linear-gradient(180deg, #f6fbff, #ffffff); border:1px solid #e8eef7; border-radius:12px; padding:10px; }
+.je-hero-avatar { width:48px; height:48px; border-radius:12px; object-fit:cover; }
+.je-hero-tagline { margin: 4px 0 0 0; }
+.je-root, html, body #root, body {
+  height: 100%;
+}
+.je-root, body {
+  margin: 0;
+}
+.je-grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+.je-input { padding: 10px 12px; border: 1px solid #e3e6ee; border-radius: 8px; font-size: 14px; }
+.je-label { font-size: 13px; color: #333; margin-bottom: 6px; }
+.je-section-title { font-size: 1.05rem; margin-top: 14px; color: #222; }
+.je-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top: 16px }
+.je-button { background: linear-gradient(180deg,#1f6feb,#125cd8); color: #fff; border: none; padding: 8px 12px; border-radius: 8px; cursor:pointer; }
+.je-button.alt { background: #f3f4f6; color:#111 }
+.je-preview { background:#fafafa; border:1px solid #f0f0f0; padding:12px; border-radius:8px; max-height:220px; overflow:auto }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* small helpers */
+.je-small { font-size: 13px; color: #666 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+/* Dark mode (applied when body.je-dark) */
+body.je-dark { background:#0f172a; color:#e5e7eb; }
+body.je-dark .je-container { background:#111827; box-shadow:0 6px 20px rgba(0,0,0,0.4); }
+body.je-dark .je-input { background:#1f2937; border-color:#374151; color:#e5e7eb; }
+body.je-dark .je-input::placeholder { color:#6b7280; }
+body.je-dark .je-label { color:#e5e7eb; }
+body.je-dark .je-section-title { color:#f1f5f9; }
+body.je-dark .je-button { background:linear-gradient(180deg,#2563eb,#1d4ed8); }
+body.je-dark .je-button.alt { background:#374151; color:#e5e7eb; }
+body.je-dark .je-preview { background:#1f2937; border-color:#374151; color:#e5e7eb; }
+body.je-dark .je-small { color:#9ca3af; }
+body.je-dark .je-hero { background:linear-gradient(180deg,#1e293b,#111827); border-color:#1e293b; }
+body.je-dark #job-ease-title { color:#f8fafc; }

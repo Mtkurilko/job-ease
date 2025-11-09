@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Coworker Michael — Popup</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="je-popup">
+      <div class="je-popup-header">
+        <img src="icon48.png" alt="Coworker Michael" class="je-popup-avatar" />
+        <div>
+          <h3 class="je-h3">Coworker Michael</h3>
+          <div class="je-popup-tagline">THE Coworker Michael. Famous One-Liner now here to simplify applying to jobs.</div>
+        </div>
+      </div>
+      <div class="je-actions">
+        <button id="fillBtn">Fill Form</button>
+        <button id="syncBtn">Sync From Tab</button>
+        <button id="refreshBtn">Refresh</button>
+      </div>
+      <div class="je-actions">
+        <button id="importLinkedInBtn">Import from LinkedIn</button>
+      </div>
+      <div class="je-status"><strong>Status:</strong> <span id="status">idle</span></div>
+      <div class="je-theme-row">
+        <label class="je-theme-toggle"><input type="checkbox" id="themeToggle" /> Dark mode</label>
+      </div>
+      <div class="je-preview" id="preview"></div>
+      <div class="je-footer">Tip: Sync your profile from the web app if you don’t see it here.</div>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+  </html>
