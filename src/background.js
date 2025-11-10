@@ -23,12 +23,19 @@ if (typeof chrome !== 'undefined' && chrome.commands) {
         });
       });
     }
+    if (command === 'open-job-ease') {
+      try { chrome.tabs.create({ url: 'https://job-ease.vercel.app/' }); } catch (e) { console.warn('Failed to open web app', e); }
+    }
   });
 }
 
 // Basic message forwarding: allow popup to ask background to call content script
 if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage) {
   chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
+    if (req?.type === 'OPEN_WEB_APP') {
+      try { chrome.tabs.create({ url: 'https://job-ease.vercel.app/' }); sendResponse({ ok: true }); } catch (e) { sendResponse({ ok: false }); }
+      return; 
+    }
     // Popup asks background to sync profile from the active tab's localStorage
     if (req?.type === 'SYNC_FROM_ACTIVE_TAB') {
       chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {

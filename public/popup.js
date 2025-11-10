@@ -4,6 +4,7 @@
   const previewEl = document.getElementById('preview');
   const fillBtn = document.getElementById('fillBtn');
   const refreshBtn = document.getElementById('refreshBtn');
+  const openAppBtn = document.getElementById('openAppBtn');
   const syncBtn = document.getElementById('syncBtn');
   const themeToggle = document.getElementById('themeToggle');
   const toggleDiagBtn = document.getElementById('toggleDiagBtn');
@@ -72,6 +73,20 @@
   });
 
   refreshBtn.addEventListener('click', () => { setStatus('refresh'); loadProfile(); setTimeout(()=> setStatus('idle'), 800); });
+
+  // Open JobEase web app in a new tab
+  openAppBtn?.addEventListener('click', () => {
+    try {
+      if (chrome?.tabs?.create) {
+        chrome.tabs.create({ url: 'https://job-ease.vercel.app/' });
+      } else {
+        // fallback
+        window.open('https://job-ease.vercel.app/', '_blank');
+      }
+    } catch(e) {
+      try { window.open('https://job-ease.vercel.app/', '_blank'); } catch(_) {}
+    }
+  });
 
   // Bring back Sync From Tab in popup: pulls app's local profile from active tab localStorage
   syncBtn?.addEventListener('click', () => {

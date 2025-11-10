@@ -17,7 +17,7 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "permissions": ["activeTab", "scripting", "storage"],
+  "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "background": {
     "service_worker": "background.js"
   },
@@ -35,6 +35,12 @@
         "default": "Ctrl+Shift+Y"
       },
       "description": "Trigger JobEase autofill on active tab"
+    },
+    "open-job-ease": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O"
+      },
+      "description": "Open JobEase web app"
     }
   }
 }
