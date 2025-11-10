@@ -12,6 +12,8 @@ html, body { margin:0; padding:0; font-family: system-ui, -apple-system, 'Segoe 
 .je-preview { max-height:200px; overflow:auto; padding:8px; background:#fafafa; border-radius:6px; font-size:12px; border:1px solid #e8e8e8; }
 .je-footer { margin-top:10px; font-size:11px; color:#6b7280; text-align:center; }
 button:hover { opacity:.95; }
+.je-metrics { font-size:11px; color:#374151; margin:4px 0 8px; white-space:pre-line; }
+body.je-dark .je-metrics { color:#9ca3af; }
 
 /* Dark theme overrides (applied when body.je-dark) */
 body.je-dark .je-popup { background:#111827; color:#e5e7eb; }

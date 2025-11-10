@@ -21,12 +21,17 @@
         <button id="refreshBtn">Refresh</button>
       </div>
       <div class="je-actions">
-        <button id="importLinkedInBtn">Import from LinkedIn</button>
+        <button id="toggleDiagBtn">Diagnostics: Off</button>
       </div>
-      <div class="je-status"><strong>Status:</strong> <span id="status">idle</span></div>
-      <div class="je-theme-row">
-        <label class="je-theme-toggle"><input type="checkbox" id="themeToggle" /> Dark mode</label>
+      <div class="je-actions">
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px">
+          <input type="checkbox" id="sitePrefsToggle" /> Remember per-site preferences
+        </label>
+        <button id="clearSitePrefsBtn" title="Remove saved preferences for this site">Clear Site Prefs</button>
       </div>
+  <div class="je-status"><strong>Status:</strong> <span id="status">idle</span></div>
+  <div class="je-metrics" id="metrics"></div>
+      <div class="je-theme-row"><label class="je-theme-toggle"><input type="checkbox" id="themeToggle" /> Dark mode</label></div>
       <div class="je-preview" id="preview"></div>
       <div class="je-footer">Tip: Sync your profile from the web app if you don’t see it here.</div>
     </div>

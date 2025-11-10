@@ -87,24 +87,6 @@ if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.onMessage)
       });
       return true; // indicates we'll send response asynchronously
     }
-    if (req?.type === 'IMPORT_FROM_LINKEDIN') {
-      chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
-        const tab = tabs && tabs[0];
-        if (!tab || !tab.id) { sendResponse({ ok:false, error:'no-active-tab' }); return; }
-        try {
-          // Ensure content script is present
-          try {
-            await chrome.scripting.executeScript({ target: { tabId: tab.id }, files: ['content.js'] });
-          } catch(e) {}
-          chrome.tabs.sendMessage(tab.id, { type: 'SCRAPE_LINKEDIN_PROFILE' }, (resp) => {
-            if (chrome.runtime.lastError) { sendResponse({ ok:false, error:'no-content' }); return; }
-            sendResponse(resp || { ok:false, error:'no-response' });
-          });
-        } catch(e) {
-          sendResponse({ ok:false, error:'scrape-exec-failed' });
-        }
-      });
-      return true;
-    }
+    // LinkedIn import removed per updated requirements.
   });
 }

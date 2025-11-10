@@ -203,36 +203,62 @@ export default function App() {
     };
     reader.readAsDataURL(file);
 
-    // Optional auto-parse for text-based resumes (txt/rtf) for quick field extraction
+    // Auto-parse resume content for key fields (PDF/TXT/RTF). DOC/DOCX not parsed yet.
     const isTextLike = /text|rtf/.test(file.type) || /\.(txt|rtf)$/i.test(file.name);
+    const isPDF = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+
+    const applyExtracted = (text) => {
+      try {
+        const emailMatch = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+        const phoneMatch = text.match(/\+?[0-9][0-9()\-\s]{7,}[0-9]/);
+        const linkedinMatch = text.match(/https?:\/\/(?:www\.)?linkedin\.com\/[A-Za-z0-9_\-\/]+/i);
+        // naive name extraction: first line(s)
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+        let nameParts = [];
+        for (const line of lines.slice(0, 12)) {
+          if (/^[A-Za-z ,.'\-]{3,}$/.test(line)) {
+            const parts = line.split(/\s+/).filter(p => /^[A-Za-z\-'.]+$/.test(p));
+            if (parts.length >= 2 && parts.length <= 5) { nameParts = parts; break; }
+          }
+        }
+        setProfile(prev => ({
+          ...prev,
+          email: prev.email || (emailMatch ? emailMatch[0] : prev.email),
+          phone: prev.phone || (phoneMatch ? phoneMatch[0] : prev.phone),
+          linkedin: prev.linkedin || (linkedinMatch ? linkedinMatch[0] : prev.linkedin),
+          firstName: prev.firstName || (nameParts[0] || prev.firstName),
+          lastName: prev.lastName || (nameParts.slice(1).join(' ') || prev.lastName)
+        }));
+      } catch(e) {}
+    };
+
     if (isTextLike) {
       try {
         const textReader = new FileReader();
         textReader.onload = () => {
-          try {
-            const text = String(textReader.result || '');
-            const emailMatch = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
-            const phoneMatch = text.match(/\+?[0-9][0-9()\-\s]{7,}[0-9]/);
-            // naive name extraction: first non-empty line with 2-4 words
-            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-            let nameParts = [];
-            for (const line of lines.slice(0, 10)) {
-              if (/^[A-Za-z ,.'\-]{3,}$/.test(line)) {
-                const parts = line.split(/\s+/).filter(p => /^[A-Za-z\-'.]+$/.test(p));
-                if (parts.length >= 2 && parts.length <= 4) { nameParts = parts; break; }
-              }
-            }
-            setProfile(prev => ({
-              ...prev,
-              email: prev.email || (emailMatch ? emailMatch[0] : prev.email),
-              phone: prev.phone || (phoneMatch ? phoneMatch[0] : prev.phone),
-              firstName: prev.firstName || (nameParts[0] || prev.firstName),
-              lastName: prev.lastName || (nameParts.slice(1).join(' ') || prev.lastName)
-            }));
-          } catch(err) {}
+          try { applyExtracted(String(textReader.result || '')); } catch(err) {}
         };
         textReader.readAsText(file);
       } catch(err) {}
+    } else if (isPDF) {
+      (async () => {
+        try {
+          const pdfjs = await import('pdfjs-dist');
+          try { pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`; } catch(e) {}
+          const data = await file.arrayBuffer();
+          const pdf = await pdfjs.getDocument({ data }).promise;
+          let text = '';
+          const maxPages = Math.min(pdf.numPages, 6);
+          for (let i=1;i<=maxPages;i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            text += '\n' + content.items.map(it => it.str).join(' ');
+          }
+          applyExtracted(text);
+        } catch(err) {
+          console.warn('PDF parse failed', err);
+        }
+      })();
     }
   }
 
@@ -241,6 +267,7 @@ export default function App() {
     setMessage('Resume removed');
     setTimeout(() => setMessage(''), 1200);
   }
+
 
   function handleCoverUpload(e) {
     const file = e.target.files?.[0];
@@ -379,8 +406,6 @@ export default function App() {
           <button className="je-button alt" onClick={exportJSON}>Export JSON</button>
           <input ref={importInputRef} type="file" accept="application/json" onChange={importJSON} style={{ display: 'none' }} />
           <button type="button" className="je-button alt" onClick={() => importInputRef.current && importInputRef.current.click()}>Import JSON</button>
-          <button className="je-button" onClick={syncToExtension}>Sync to Extension</button>
-          <button className="je-button alt" onClick={loadFromExtension}>Load from Extension</button>
           <button className="je-button alt" onClick={() => setDarkMode(d => !d)}>{darkMode ? 'Light Mode' : 'Dark Mode'}</button>
         </div>
       </div>
